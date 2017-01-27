@@ -19,7 +19,6 @@ test_labels = mnist["test_labels"]
 #for trainData in trainndx:
 
 
-#trainndx = 1:100
 testndx =  1:10000
 
 
@@ -71,6 +70,18 @@ while true
   end
 
   error_rate = mean(ypred .!= ytest)
+
+  for i in eachindex(ypred)
+    if(ypred[i] .!= ytest[i])
+      using Plots
+      pyplot()
+      println("ERROR PRINT",ypred[i])
+      img = flipdim(train_images[:,:,i], 1)  # ploting error images
+      heatmap(1:28, 1:28, img, fillcolor = :grays, legend = false)
+      Plots.gui()
+      break ;
+    end
+  end
 
   print("Value was :", counter)
   print(" ")
